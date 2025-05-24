@@ -13,8 +13,24 @@ export async function POST(req: NextRequest): Promise<NextResponse<ResponseSchem
             where: {
                 email
             }
+            ,
+            include:{
+               role:true
+            }
         });
         if (!user) {
+            return NextResponse.json({
+                status: 'fail',
+                message: 'Invalid email or password',
+                data: null
+            }, { status: 401 });
+        }
+        const role = await prisma.role.findMany({
+            where: {
+                id: { in: user.role.map((role: any) => role.roleId) }
+            }
+        })
+        if (role.length === 0) {
             return NextResponse.json({
                 status: 'fail',
                 message: 'Invalid email or password',
@@ -35,7 +51,7 @@ export async function POST(req: NextRequest): Promise<NextResponse<ResponseSchem
         data: {
             id: user.id,
             email: user.email,
-            role: user.role
+            role: role.map((role) => role.roleId)
         }
     }, { status: 200 });
     } catch (error) {
