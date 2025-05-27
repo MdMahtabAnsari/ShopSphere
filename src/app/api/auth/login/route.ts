@@ -9,28 +9,10 @@ export async function POST(req: NextRequest): Promise<NextResponse<ResponseSchem
     try {
         const body = await req.json();
         const { email, password } = loginSchema.parse(body);
-        const user = await prisma.user.findFirst({
-            where: {
-                email
-            }
-            ,
-            include:{
-               role:true
-            }
+        const user = await prisma.user.findUnique({
+            where: { email }
         });
         if (!user) {
-            return NextResponse.json({
-                status: 'fail',
-                message: 'Invalid email or password',
-                data: null
-            }, { status: 401 });
-        }
-        const role = await prisma.role.findMany({
-            where: {
-                id: { in: user.role.map((role: any) => role.roleId) }
-            }
-        })
-        if (role.length === 0) {
             return NextResponse.json({
                 status: 'fail',
                 message: 'Invalid email or password',
@@ -51,7 +33,7 @@ export async function POST(req: NextRequest): Promise<NextResponse<ResponseSchem
         data: {
             id: user.id,
             email: user.email,
-            role: role.map((role) => role.roleId)
+            role: user.role,
         }
     }, { status: 200 });
     } catch (error) {
