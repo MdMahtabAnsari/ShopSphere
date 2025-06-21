@@ -1,0 +1,39 @@
+{
+  "name": "api-admin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "npm run build && node dist/index.js",
+    "lint": "tsc --noEmit && eslint src",
+    "lint:fix": "eslint src --fix",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "@clerk/express": "^1.7.0",
+    "@workspace/api-error": "workspace:^",
+    "@workspace/db": "workspace:^",
+    "@workspace/logger": "workspace:^",
+    "@workspace/schema": "workspace:^",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "zod": "^3.25.67",
+    "@workspace/backend-common": "workspace:^"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.0.3",
+    "@workspace/eslint-config": "workspace:^",
+    "@workspace/typescript-config": "workspace:*",
+    "typescript": "^5.7.3"
+  }
+}

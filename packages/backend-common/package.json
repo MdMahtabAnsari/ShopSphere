@@ -1,0 +1,35 @@
+{
+  "name": "@workspace/backend-common",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "tsc",
+    "lint": "tsc --noEmit && eslint src",
+    "lint:fix": "eslint src --fix",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "private": true,
+  "files": ["dist"],
+  "exports": {
+    "./validator": {
+      "import": "./dist/validators/index.js",
+      "types": "./dist/validators/index.d.ts"
+    }
+  },
+  "dependencies": {
+    "@workspace/api-error": "workspace:^",
+    "zod": "^3.25.67",
+    "zod-validation-error": "^3.5.2"
+  },
+  "devDependencies": {
+    "@workspace/eslint-config": "workspace:^",
+    "@workspace/typescript-config": "workspace:*",
+    "typescript": "^5.7.3",
+    "@types/node": "^24.0.3",
+    "@types/express": "^5.0.3"
+  }
+}
