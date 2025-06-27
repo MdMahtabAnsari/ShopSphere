@@ -126,7 +126,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\User\\Desktop\\shopsphere\\packages\\db\\generated\\prisma",
+      "value": "C:\\Users\\MARaj\\Desktop\\ShopSphere\\packages\\db\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -140,7 +140,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\User\\Desktop\\shopsphere\\packages\\db\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\MARaj\\Desktop\\ShopSphere\\packages\\db\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {

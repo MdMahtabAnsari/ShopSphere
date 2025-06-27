@@ -39,6 +39,19 @@ class StoreRepository {
         }
     }
 
+    async getUserStoresCount(userId:string){
+        try{
+            return await prisma.store.count({
+                where: {
+                    userId
+                }
+            });
+        } catch (error) {
+            console.error("Error fetching user stores count:", error);
+            throw new InternalServerError("Failed to fetch user stores count");
+        }
+    }
+
     async getStoreById(userId: string, storeId: string) {
         try {
             return await prisma.store.findFirst({
@@ -50,6 +63,36 @@ class StoreRepository {
         } catch (error) {
             console.error("Error fetching store by ID:", error);
             throw new InternalServerError("Failed to fetch store by ID");
+        }
+    }
+
+    async isUserHaveStore(userId: string) {
+        try {
+            const store = await prisma.store.findFirst({
+                where: {
+                    userId
+                }
+            });
+            return !!store;
+        } catch (error) {
+            console.error("Error checking if user has store:", error);
+            throw new InternalServerError("Failed to check if user has store");
+        }
+    }
+
+    async getUserAllStores(userId: string) {
+        try {
+            return await prisma.store.findMany({
+                where: {
+                    userId
+                },
+                orderBy: {
+                    createdAt: "desc"
+                }
+            });
+        } catch (error) {
+            console.error("Error fetching all user stores:", error);
+            throw new InternalServerError("Failed to fetch all user stores");
         }
     }
 }

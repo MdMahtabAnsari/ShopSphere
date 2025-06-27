@@ -64,6 +64,42 @@ class StoreController{
             next(error); // Pass the error to the error handler
         }
     }
+    async isUserHaveStore(req: Request, res: Response, next: NextFunction) {
+        const { userId } = getAuth(req)
+        if(!userId) {
+            throw new UnauthorisedError();
+        }
+
+        try {
+            const isHave = await storeService.isUserHaveStore(userId);
+            res.status(200).json({
+                message: "User store availability checked successfully",
+                status: "success",
+                isOperational: true,
+                data: isHave,
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
+    async getUserAllStores(req: Request, res: Response, next: NextFunction) {
+        const { userId } = getAuth(req)
+        if(!userId) {
+            throw new UnauthorisedError();
+        }
+
+        try {
+            const stores = await storeService.getUserAllStores(userId);
+            res.status(200).json({
+                message: "User all stores fetched successfully",
+                status: "success",
+                isOperational: true,
+                data: stores,
+            });
+        } catch (error) {
+            next(error); // Pass the error to the error handler
+        }
+    }
 }
 
 export const storeController = new StoreController();

@@ -20,6 +20,14 @@
     "./api": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
+    },
+    "./admin/store":{
+      "import": "./dist/admin/store/index.js",
+      "types": "./dist/admin/store/index.d.ts"
+    },
+    "./common":{
+      "import": "./dist/common/index.js",
+      "types": "./dist/common/index.d.ts"
     }
   },
   "devDependencies": {
@@ -28,7 +36,8 @@
     "typescript": "^5.7.3"
   },
   "dependencies": {
-    "zod": "^3.25.67"
+    "zod": "^3.25.67",
+    "@workspace/schema": "workspace:^"
   }
 }
 

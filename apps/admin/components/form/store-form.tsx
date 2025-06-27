@@ -9,9 +9,11 @@ import {Form,FormField,FormItem,FormLabel,FormControl,FormMessage} from "@worksp
 import {useStoreModal} from "@/hooks/use-store-modal";
 import {createStore} from "@/lib/api/store/store";
 import {toast} from "sonner";
+import { useStoreAvailable } from "@/hooks/use-store-available";
 
 export const StoreForm = ()=> {
     const onClose = useStoreModal((state) => state.onClose);
+    const setIsAvailable = useStoreAvailable((state) => state.setIsAvailable);
     const form = useForm<CreateStoreSchema>({
         resolver: zodResolver(createStoreSchema),
         defaultValues: {
@@ -23,6 +25,7 @@ export const StoreForm = ()=> {
     const onSubmit = async (data: CreateStoreSchema) => {
         const response = await createStore(data);
         if (response.status === 'success') {
+            setIsAvailable(true);
             onClose();
             toast.success(response.message);
         } else {

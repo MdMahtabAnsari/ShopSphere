@@ -3,7 +3,7 @@ import {Express} from "express";
 import {errorHandler} from "@workspace/api-error/handler";
 
 const routes = (app: Express) => {
-    app.use("/api/admin/store", storeRouter);
+    app.use("/api/admin/stores", storeRouter);
     app.use(errorHandler);
 }
 
