@@ -1,12 +1,15 @@
-import { ModalProvider } from "@/providers/modal-provider";
-import { ReactNode } from "react";
+import {ModalProvider} from "@/providers/store/modal-provider";
+import {ReactNode} from "react";
+import {TooltipProvider} from "@workspace/ui/components/tooltip";
 
 export default function RootLayout({ children, }: Readonly<{ children: ReactNode }>) {
     return (
         <>
-            <ModalProvider />
             <div className="w-full h-full items-center justify-center">
-                {children}
+                <TooltipProvider>
+                    <ModalProvider/>
+                    {children}
+                </TooltipProvider>
             </div>
         </>
     )

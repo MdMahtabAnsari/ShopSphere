@@ -1,14 +1,15 @@
 import {Request,Response,NextFunction} from "express";
-import {CreateStoreSchema,GetStoreByIdSchema} from "@workspace/schema/admin/store";
+import {CreateStoreSchema,GetStoreByIdSchema,UpdateStoreSchema} from "@workspace/schema/admin/store";
 import {storeService} from "../services/store.service.js";
-import { getAuth} from '@clerk/express'
+import {getAuth} from '@clerk/express'
 import {UnauthorisedError} from "@workspace/api-error/error";
+import {PageLimitSchema} from "@workspace/schema/common/page";
 
 class StoreController{
     async createStore(req: Request, res: Response, next: NextFunction) {
         const { userId } = getAuth(req)
         if(!userId) {
-            throw new UnauthorisedError();
+            return next(new UnauthorisedError());
         }
         const data: CreateStoreSchema = req.body;
 
@@ -28,13 +29,12 @@ class StoreController{
     async getUserStores(req: Request, res: Response, next: NextFunction) {
         const { userId } = getAuth(req)
         if(!userId) {
-            throw new UnauthorisedError();
+            return next(new UnauthorisedError());
         }
-        const page = parseInt(req.query.page as string) || 1;
-        const limit = parseInt(req.query.limit as string) || 10;
+        const { page, limit } = req.query as PageLimitSchema;
 
         try {
-            const stores = await storeService.getUserStores(userId, page, limit);
+            const stores = await storeService.getUserStores(userId, page?parseInt(page):1, limit?parseInt(limit):10);
             res.status(200).json({
                 message: "User stores fetched successfully",
                 status: "success",
@@ -48,7 +48,7 @@ class StoreController{
     async getStoreById(req: Request, res: Response, next: NextFunction) {
         const { userId } = getAuth(req)
         if(!userId) {
-            throw new UnauthorisedError();
+            return next(new UnauthorisedError());
         }
         const {id} = req.params as GetStoreByIdSchema;
 
@@ -67,7 +67,7 @@ class StoreController{
     async isUserHaveStore(req: Request, res: Response, next: NextFunction) {
         const { userId } = getAuth(req)
         if(!userId) {
-            throw new UnauthorisedError();
+            return next(new UnauthorisedError());
         }
 
         try {
@@ -85,7 +85,7 @@ class StoreController{
     async getUserAllStores(req: Request, res: Response, next: NextFunction) {
         const { userId } = getAuth(req)
         if(!userId) {
-            throw new UnauthorisedError();
+            return next(new UnauthorisedError());
         }
 
         try {
@@ -95,6 +95,46 @@ class StoreController{
                 status: "success",
                 isOperational: true,
                 data: stores,
+            });
+        } catch (error) {
+            next(error); // Pass the error to the error handler
+        }
+    }
+
+    async updateStore(req: Request, res: Response, next: NextFunction) {
+        const { userId } = getAuth(req)
+        if(!userId) {
+            return next(new UnauthorisedError());
+        }
+        const data: UpdateStoreSchema = req.body;
+
+        try {
+            const updatedStore = await storeService.updateStore(userId,data);
+            res.status(200).json({
+                message: "Store updated successfully",
+                status: "success",
+                isOperational: true,
+                data: updatedStore,
+            });
+        } catch (error) {
+            next(error); // Pass the error to the error handler
+        }
+    }
+
+    async deleteStore(req: Request, res: Response, next: NextFunction) {
+        const { userId } = getAuth(req)
+        if(!userId) {
+            return next(new UnauthorisedError());
+        }
+        const {id} = req.params as GetStoreByIdSchema;
+
+        try {
+            const deletedStore = await storeService.deleteStore(userId, id);
+            res.status(200).json({
+                message: "Store deleted successfully",
+                status: "success",
+                isOperational: true,
+                data: deletedStore,
             });
         } catch (error) {
             next(error); // Pass the error to the error handler

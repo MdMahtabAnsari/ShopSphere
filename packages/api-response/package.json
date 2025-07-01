@@ -25,6 +25,10 @@
       "import": "./dist/admin/store/index.js",
       "types": "./dist/admin/store/index.d.ts"
     },
+    "./admin/billboard":{
+      "import": "./dist/admin/billboard/index.js",
+      "types": "./dist/admin/billboard/index.d.ts"
+    },
     "./common":{
       "import": "./dist/common/index.js",
       "types": "./dist/common/index.d.ts"

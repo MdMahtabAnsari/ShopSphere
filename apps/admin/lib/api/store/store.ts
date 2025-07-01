@@ -1,6 +1,6 @@
 import {api} from "@/lib/api/api";
 import {ApiResponseSchema} from "@workspace/api-response/api";
-import {CreateStoreSchema} from "@workspace/schema/admin/store";
+import {CreateStoreSchema,UpdateStoreSchema} from "@workspace/schema/admin/store";
 import {AxiosError} from "axios";
 
 export const createStore = async(data: CreateStoreSchema,token:string|null= null):Promise<ApiResponseSchema> => {
@@ -101,9 +101,13 @@ export const isUserHaveStore = async(token: string | null= null): Promise<ApiRes
     }
 }
 
-export const getUserAllStores=async():Promise<ApiResponseSchema>=>{
+export const getUserAllStores=async(token: string | null= null):Promise<ApiResponseSchema>=>{
     try {
-        const response = await api.get(`api/admin/stores/all`);
+        const response = await api.get(`api/admin/stores/all`, token ? {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        } : {});
         return response.data;
     } catch (error) {
         console.error("Error fetching all user stores:", error);
@@ -112,6 +116,50 @@ export const getUserAllStores=async():Promise<ApiResponseSchema>=>{
         }
         return {
             message: "Failed to fetch all user stores",
+            status: "error",
+            isOperational: false,
+            data: null,
+        };
+    }
+}
+
+export const updateStore = async(data: UpdateStoreSchema, token: string | null= null): Promise<ApiResponseSchema> => {
+    try {
+        const response = await api.put(`api/admin/stores`, data, token ? {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        } : {});
+        return response.data;
+    } catch (error) {
+        console.error("Error updating store:", error);
+        if (error instanceof AxiosError && error.response) {
+            return error.response.data as ApiResponseSchema;
+        }
+        return {
+            message: "Failed to update store",
+            status: "error",
+            isOperational: false,
+            data: null,
+        };
+    }
+}
+
+export const deleteStore = async(id: string, token: string | null= null): Promise<ApiResponseSchema> => {
+    try {
+        const response = await api.delete(`api/admin/stores/${id}`, token ? {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        } : {});
+        return response.data;
+    } catch (error) {
+        console.error("Error deleting store:", error);
+        if (error instanceof AxiosError && error.response) {
+            return error.response.data as ApiResponseSchema;
+        }
+        return {
+            message: "Failed to delete store",
             status: "error",
             isOperational: false,
             data: null,

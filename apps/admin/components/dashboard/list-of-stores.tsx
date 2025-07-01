@@ -79,17 +79,18 @@ export const ListOfStoresWithPagination = () => {
             }
         } catch (err) {
             setError(err as Error);
+
         }
         setLoading(false);
     }, []);
 
     useEffect(() => {
-        fetchStores();{}
+        fetchStores();
     }, [fetchStores]);
 
-    const onPageChange = (page: number) => {
+    const onPageChange = useCallback((page: number) => {
         fetchStores(page, storesData?.pagination?.limit || 10);
-    };
+    }, [fetchStores, storesData?.pagination?.limit]);
 
     if (loading) return <ListOfStoresSkeleton />;
     if (error) return <ErrorFallback error={error} resetErrorBoundary={() => fetchStores()} />;

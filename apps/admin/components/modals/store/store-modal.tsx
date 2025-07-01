@@ -1,7 +1,7 @@
 "use client";
 import {Modal} from "@/components/modal";
-import {useStoreModal} from "@/hooks/use-store-modal";
-import {StoreForm} from "@/components/form/store-form";
+import {useStoreModal} from "@/hooks/store/use-store-modal";
+import {StoreForm} from "@/components/form/store/store-form";
 export const StoreModal = () => {
     const isOpen = useStoreModal((state) => state.isOpen);
     const onClose = useStoreModal((state) => state.onClose);

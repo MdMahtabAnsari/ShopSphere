@@ -6,10 +6,10 @@ import {Button} from "@workspace/ui/components/button";
 import {createStoreSchema,CreateStoreSchema} from "@workspace/schema/admin/store";
 import {Loader} from "lucide-react";
 import {Form,FormField,FormItem,FormLabel,FormControl,FormMessage} from "@workspace/ui/components/form";
-import {useStoreModal} from "@/hooks/use-store-modal";
+import {useStoreModal} from "@/hooks/store/use-store-modal";
 import {createStore} from "@/lib/api/store/store";
 import {toast} from "sonner";
-import { useStoreAvailable } from "@/hooks/use-store-available";
+import { useStoreAvailable } from "@/hooks/store/use-store-available";
 
 export const StoreForm = ()=> {
     const onClose = useStoreModal((state) => state.onClose);

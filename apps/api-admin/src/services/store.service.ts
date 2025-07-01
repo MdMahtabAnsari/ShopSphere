@@ -1,5 +1,5 @@
 import { storeRepository } from "../repositories/store.repository.js";
-import { CreateStoreSchema } from "@workspace/schema/admin/store";
+import { CreateStoreSchema,UpdateStoreSchema } from "@workspace/schema/admin/store";
 import { AppError, InternalServerError, NotFoundError } from "@workspace/api-error/error";
 import { PaginationSchema } from "@workspace/schema/common/page"
 
@@ -77,6 +77,28 @@ class StoreService {
                 throw error;
             }
             throw new InternalServerError("Failed to fetch all user stores");
+        }
+    }
+
+    async updateStore(userId:string,data:UpdateStoreSchema){
+        try {
+            return await storeRepository.updateStore(userId, data);
+        } catch (error) {
+            if (error instanceof AppError) {
+                throw error;
+            }
+            throw new InternalServerError("Failed to update store");
+        }
+    }
+
+    async deleteStore(userId:string,id:string){
+        try {
+            return await storeRepository.deleteStore(userId, id);
+        } catch (error) {
+            if (error instanceof AppError) {
+                throw error;
+            }
+            throw new InternalServerError("Failed to delete store");
         }
     }
 }

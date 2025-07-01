@@ -5,6 +5,7 @@ import routes from "./routes/index.js";
 import {clerkMiddleware} from "@clerk/express";
 import cors from "cors";
 import corsConfig from "./configs/cors.config.js";
+import serverConfig from "./configs/server.config.js";
 
 const app = express();
 app.use(cors(corsConfig));
@@ -14,6 +15,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(httpLogger);
 routes(app);
 
-app.listen(3003, () => {
-    console.log('API Admin server is running on http://localhost:3003');
+app.listen(serverConfig.PORT, () => {
+    console.log(`API Admin server is running on http://localhost:${serverConfig.PORT}`);
 });

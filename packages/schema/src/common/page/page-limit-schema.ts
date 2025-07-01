@@ -13,4 +13,10 @@ export const paginationSchema = z.object({
     totalPages: pageInt
 });
 
+export const pageLimitSchema = z.object({
+    page: page,
+    limit: limit
+});
+
 export type PaginationSchema = z.infer<typeof paginationSchema>;
+export type PageLimitSchema = z.infer<typeof pageLimitSchema>;

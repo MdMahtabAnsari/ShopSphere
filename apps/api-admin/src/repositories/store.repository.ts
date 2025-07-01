@@ -1,6 +1,6 @@
 import {prisma, Prisma} from "@workspace/db/prisma";
-import {ConflictError, InternalServerError} from "@workspace/api-error/error";
-import {CreateStoreSchema} from "@workspace/schema/admin/store";
+import {ConflictError, InternalServerError,NotFoundError} from "@workspace/api-error/error";
+import {CreateStoreSchema,UpdateStoreSchema} from "@workspace/schema/admin/store";
 
 class StoreRepository {
     async create(userId: string, data: CreateStoreSchema) {
@@ -93,6 +93,51 @@ class StoreRepository {
         } catch (error) {
             console.error("Error fetching all user stores:", error);
             throw new InternalServerError("Failed to fetch all user stores");
+        }
+    }
+
+    async deleteStore(userId: string, storeId: string) {
+        try {
+            return await prisma.store.delete({
+                where: {
+                    id: storeId,
+                    userId
+                }
+            });
+        } catch (error) {
+            console.error("Error deleting store:", error);
+            if (error instanceof Prisma.PrismaClientKnownRequestError) {
+                if (error.code === 'P2025') {
+                    throw new NotFoundError("Store not found");
+                }
+
+            }
+            throw new InternalServerError("Failed to delete store");
+        }
+    }
+
+    async updateStore(userId: string, data: UpdateStoreSchema) {
+        try {
+            return await prisma.store.update({
+                where: {
+                    userId: userId,
+                    id: data.id,
+                },
+                data: {
+                    ...data
+                }
+            });
+        } catch (error) {
+            console.error("Error updating store:", error);
+            if (error instanceof Prisma.PrismaClientKnownRequestError) {
+                if (error.code === 'P2025') {
+                    throw new NotFoundError("Store not found");
+                }
+                else if( error.code === 'P2002') {
+                    throw new ConflictError("Store name already exists");
+                }
+            }
+            throw new InternalServerError("Failed to update store");
         }
     }
 }

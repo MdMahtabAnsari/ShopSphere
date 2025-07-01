@@ -1,9 +1,10 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
-import { StoreModal } from "@/components/modals/store-modal";
+import { StoreModal } from "@/components/modals/store/store-modal";
 import { isUserHaveStore } from "@/lib/api/store/store";
-import { useStoreModal } from "@/hooks/use-store-modal";
-import { useStoreAvailable } from "@/hooks/use-store-available";
+import { useStoreModal } from "@/hooks/store/use-store-modal";
+import { useStoreAvailable } from "@/hooks/store/use-store-available";
+import {useModalControl} from "@/providers/use-modal-control";
 
 export const ModalProvider = () => {
   const [isClient, setIsClient] = useState(false);
@@ -14,7 +15,7 @@ export const ModalProvider = () => {
   const isAvailable = useStoreAvailable((state) => state.isAvailable);
   const isManualOpen = useStoreModal((state) => state.isManualOpen);
   const [loading, setLoading] = useState(false);
-
+  const { shouldRender } = useModalControl({isClient, isAvailable, isOpen, isManualOpen, loading, onOpen, onClose,});
   // Only run effects on client
   useEffect(() => {
     setIsClient(true);
@@ -38,19 +39,9 @@ export const ModalProvider = () => {
     }
   }, [checkUserStore, isClient]);
 
-  useEffect(() => {
-    if (!isClient || isAvailable === undefined || isManualOpen === undefined) return;
-    if (!isAvailable && !isOpen && !isManualOpen && !loading) {
-      onOpen();
+    if (!shouldRender) {
+        return null;
     }
-    if (isAvailable && isOpen && !isManualOpen) {
-      onClose();
-    }
-  }, [isClient, isAvailable, isOpen, onOpen, onClose, isManualOpen, loading]);
-
-  if (!isClient || isAvailable === undefined || isManualOpen === undefined) {
-    return null;
-  }
 
   return <StoreModal />;
 };
