@@ -13,7 +13,7 @@ class CloudinaryController{
         const {paramsToSign} = req.body as { paramsToSign: SignApiOptions };
         try {
             const signature = cloudinaryService.createSignature(paramsToSign);
-            res.status(200).json(signature);
+            res.status(200).json({signature});
         } catch (error) {
             next(error);
         }

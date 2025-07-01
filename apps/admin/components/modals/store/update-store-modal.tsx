@@ -1,3 +1,4 @@
+"use client";
 import {Modal} from "@/components/modal";
 import {UpdateStoreSchema} from "@workspace/schema/admin/store";
 import {UpdateStoreForm} from "@/components/form/store/update-store-form";

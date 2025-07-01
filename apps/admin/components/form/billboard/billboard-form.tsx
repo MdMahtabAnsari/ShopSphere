@@ -1,4 +1,4 @@
-"use client";
+
 import {CreateBillboardSchema, createBillboardSchema} from "@workspace/schema/admin/billboard";
 import {toast} from "sonner";
 import {ImageUp, Loader} from "lucide-react";
@@ -51,7 +51,7 @@ export const BillboardForm = ({storeId}: { storeId: string }) => {
                         <FormItem>
                             <FormLabel>Label</FormLabel>
                             <FormControl>
-                               <Textarea placeholder="Billboard Label" {...field} />
+                            <Textarea placeholder="Billboard Label" {...field} />
                             </FormControl>
                             <FormMessage/>
                         </FormItem>
@@ -87,13 +87,12 @@ export const BillboardForm = ({storeId}: { storeId: string }) => {
                 }
                 <CldUploadWidget
                     signatureEndpoint={`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/cloudinary/signature`}
-                    // uploadPreset="ShopSphere"
+                    uploadPreset="ShopSphere"
                     options={{
                         maxFiles: 1,
                         cropping: true,
                         multiple: false,
                         sources: ['local', 'url', "camera", "unsplash", "dropbox", "google_drive"],
-                        resourceType: 'image'
                     }}
                     onSuccess={(result) => {
                         if (result?.info && typeof result.info !== "string" && "secure_url" in result.info) {
