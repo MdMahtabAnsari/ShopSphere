@@ -79,7 +79,7 @@ export const getAllBillboards = async(storeId:string,token:string|null=null): Pr
     }
 }
 
-const getBillboardById = async(storeId:string,billboardId:string,token:string|null=null): Promise<ApiResponseSchema> => {
+export const getBillboardById = async(storeId:string,billboardId:string,token:string|null=null): Promise<ApiResponseSchema> => {
     try {
         const response = await api.get(`api/admin/stores/${storeId}/billboards/${billboardId}`, token ? {
             headers: {

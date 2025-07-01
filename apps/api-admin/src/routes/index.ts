@@ -1,4 +1,4 @@
-import storeRouter from "./stote.route.js";
+import storeRouter from "./store.route.js";
 import billboardRouter from "./billboard.route.js";
 import cloudinaryRouter from "./cloudinary.route.js";
 import {Express} from "express";
