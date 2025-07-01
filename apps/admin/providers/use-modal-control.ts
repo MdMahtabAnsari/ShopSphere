@@ -11,14 +11,14 @@ interface UseModalControlProps {
 }
 
 export function useModalControl({
-                                    isClient,
-                                    isAvailable,
-                                    isOpen,
-                                    isManualOpen,
-                                    loading,
-                                    onOpen,
-                                    onClose,
-                                }: UseModalControlProps) {
+    isClient,
+    isAvailable,
+    isOpen,
+    isManualOpen,
+    loading,
+    onOpen,
+    onClose,
+}: UseModalControlProps) {
     useEffect(() => {
         if (!isClient || isAvailable === undefined || isManualOpen === undefined) return;
         if (!isAvailable && !isOpen && !isManualOpen && !loading) {

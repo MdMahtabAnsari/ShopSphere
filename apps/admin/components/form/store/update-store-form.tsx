@@ -37,6 +37,7 @@ export const UpdateStoreForm = ({storeData,setData}:{storeData:UpdateStoreSchema
                 toast.error(response.message);
             }
         } catch (error) {
+            console.error("Failed to update store",error);
             toast.error("Failed to update store");
         }
     };
