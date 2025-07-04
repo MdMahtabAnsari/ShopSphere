@@ -1,9 +1,9 @@
 import {z} from 'zod';
-import {id,imageUrl,description,label} from '../../common/index.js'
+import {id,description,label,media} from '../../common/index.js'
 
 export const createBillboardSchema = z.object({
     storeId: id,
-    imageUrl: imageUrl,
+    media: media,
     label: label,
     description: description,
 })

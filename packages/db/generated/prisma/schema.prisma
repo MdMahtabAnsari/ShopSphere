@@ -26,13 +26,35 @@ model Store {
 }
 
 model Billboard {
-  id        String   @id @default(uuid())
-  storeId   String
-  label     String
-  imageUrl  String
-  store     Store    @relation(fields: [storeId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String          @id @default(uuid())
+  storeId     String
+  label       String
+  description String
+  media       BillboardMedia?
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  Store       Store           @relation(fields: [storeId], references: [id], onDelete: Cascade)
 
   @@unique([storeId, label])
+}
+
+model BillboardMedia {
+  id           String       @id @default(uuid())
+  public_id    String
+  resource     ResourceType
+  secure_url   String
+  width        Int
+  height       Int
+  playback_url String?
+  billboardId  String       @unique
+  Billboard    Billboard    @relation(fields: [billboardId], references: [id], onDelete: Cascade)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+}
+
+enum ResourceType {
+  image
+  video
+  raw
+  auto
 }

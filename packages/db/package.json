@@ -27,14 +27,14 @@
   "type": "module",
   "private": true,
   "dependencies": {
-    "@prisma/client": "^6.10.1",
+    "@prisma/client": "^6.11.1",
     "@prisma/extension-accelerate": "^2.0.1"
   },
   "devDependencies": {
+    "@types/node": "^24.0.3",
     "@workspace/eslint-config": "workspace:^",
     "@workspace/typescript-config": "workspace:*",
-    "typescript": "^5.7.3",
-    "prisma": "^6.10.1",
-    "@types/node": "^24.0.3"
+    "prisma": "^6.11.1",
+    "typescript": "^5.7.3"
   }
 }

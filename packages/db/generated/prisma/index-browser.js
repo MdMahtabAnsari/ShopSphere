@@ -20,12 +20,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.10.1
- * Query Engine version: 9b628578b3b7cae625e8c927178f15a170e74a9c
+ * Prisma Client JS version: 6.11.1
+ * Query Engine version: f40f79ec31188888a2e33acda0ecc8fd10a853a9
  */
 Prisma.prismaVersion = {
-  client: "6.10.1",
-  engine: "9b628578b3b7cae625e8c927178f15a170e74a9c"
+  client: "6.11.1",
+  engine: "f40f79ec31188888a2e33acda0ecc8fd10a853a9"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -132,7 +132,20 @@ exports.Prisma.BillboardScalarFieldEnum = {
   id: 'id',
   storeId: 'storeId',
   label: 'label',
-  imageUrl: 'imageUrl',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.BillboardMediaScalarFieldEnum = {
+  id: 'id',
+  public_id: 'public_id',
+  resource: 'resource',
+  secure_url: 'secure_url',
+  width: 'width',
+  height: 'height',
+  playback_url: 'playback_url',
+  billboardId: 'billboardId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -147,10 +160,21 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+exports.ResourceType = exports.$Enums.ResourceType = {
+  image: 'image',
+  video: 'video',
+  raw: 'raw',
+  auto: 'auto'
+};
 
 exports.Prisma.ModelName = {
   Store: 'Store',
-  Billboard: 'Billboard'
+  Billboard: 'Billboard',
+  BillboardMedia: 'BillboardMedia'
 };
 
 /**

@@ -1,12 +1,12 @@
 import {z} from "zod";
-import {id, imageUrl,label,description} from "@workspace/schema/common";
+import {id, url,label,description} from "@workspace/schema/common";
 import {createdAt, updatedAt} from "../../common/index.js";
 import { paginationSchema } from "@workspace/schema/common/page";
 import { apiResponseSchema } from "../../index.js";
 
 export const billboardSchema = z.object({
     id,
-    imageUrl,
+    imageUrl:url,
     label,
     description,
     storeId: id,

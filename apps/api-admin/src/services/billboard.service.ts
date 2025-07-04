@@ -1,34 +1,37 @@
-import {InternalServerError,NotFoundError,AppError,UnauthorisedError} from "@workspace/api-error/error";
-import {CreateBillboardSchema} from "@workspace/schema/admin/billboard";
-import {billboardRepository} from "../repositories/billboard.repository.js";
-import {storeRepository} from "../repositories/store.repository.js";
-import {PaginationSchema} from "@workspace/schema/common/page";
+import { InternalServerError, NotFoundError, AppError, UnauthorisedError } from "@workspace/api-error/error";
+import { CreateBillboardSchema } from "@workspace/schema/admin/billboard";
+import { billboardRepository } from "../repositories/billboard.repository.js";
+import { storeRepository } from "../repositories/store.repository.js";
+import { PaginationSchema } from "@workspace/schema/common/page";
+import {billboardMediaService} from './billboardMedia.service.js';
 
 class BillboardService {
-    async createBillboard(userId:string,data: CreateBillboardSchema) {
-       try{
-           const store = await storeRepository.getStoreById(userId,data.storeId);
-           if (!store) {
-               throw new NotFoundError("Store not found");
-           }
-           return await billboardRepository.createBillboard(data);
-       }catch (error) {
-              if (error instanceof AppError) {
+    async createBillboard(userId: string, path: string, data: Omit<CreateBillboardSchema, 'media'>) {
+        try {
+            const store = await storeRepository.getStoreById(userId, data.storeId);
+            if (!store) {
+                throw new NotFoundError("Store not found");
+            }
+            const billboard = await billboardRepository.createBillboard(data);
+            await billboardMediaService.create(billboard.id, path);
+            return await billboardRepository.getBillboardById(billboard.id);
+        } catch (error) {
+            if (error instanceof AppError) {
                 throw error;
-              }
-              console.error("Error creating billboard:", error);
-              throw new InternalServerError("Failed to create billboard");
-       }
+            }
+            console.error("Error creating billboard:", error);
+            throw new InternalServerError("Failed to create billboard");
+        }
 
     }
-    async getBillboardsByStoreId(userId:string,storeId: string, page: number, limit: number) {
+    async getBillboardsByStoreId(userId: string, storeId: string, page: number, limit: number) {
         try {
             const store = await storeRepository.getStoreById(userId, storeId);
             if (!store) {
                 throw new NotFoundError("Store not found");
             }
             const totalCount = await billboardRepository.getBillboardsCountByStoreId(storeId);
-            if( totalCount === 0) {
+            if (totalCount === 0) {
                 throw new NotFoundError("No billboards found for this store");
             }
             const billboards = await billboardRepository.getBillboardsByStoreId(storeId, page, limit);
@@ -50,9 +53,9 @@ class BillboardService {
         }
     }
 
-    async getAllBillboardsByStoreId(userId:string,storeId: string) {
+    async getAllBillboardsByStoreId(userId: string, storeId: string) {
         try {
-            const store = await storeRepository.getStoreById(userId,storeId);
+            const store = await storeRepository.getStoreById(userId, storeId);
             if (!store) {
                 throw new NotFoundError("Store not found");
             }
@@ -69,9 +72,9 @@ class BillboardService {
             throw new InternalServerError("Failed to fetch all billboards");
         }
     }
-    async getBillboardById(userId:string,storeId:string,id: string) {
+    async getBillboardById(userId: string, storeId: string, id: string) {
         try {
-            const store = await storeRepository.getStoreById(userId,storeId);
+            const store = await storeRepository.getStoreById(userId, storeId);
             if (!store) {
                 throw new NotFoundError("Store not found");
             }
@@ -79,7 +82,7 @@ class BillboardService {
             if (!billboard) {
                 throw new NotFoundError("Billboard not found");
             }
-            if(billboard.storeId !== storeId) {
+            if (billboard.storeId !== storeId) {
                 throw new UnauthorisedError("You are not authorised to access this billboard");
             }
             return billboard;
@@ -92,14 +95,14 @@ class BillboardService {
         }
     }
 
-    async isStoreHaveBillboard(userId:string,storeId: string) {
+    async isStoreHaveBillboard(userId: string, storeId: string) {
         try {
-            const store = await storeRepository.getStoreById(userId,storeId);
+            const store = await storeRepository.getStoreById(userId, storeId);
             if (!store) {
                 throw new NotFoundError("Store not found");
             }
             const isAvail = await billboardRepository.isStoreHaveBillboard(storeId)
-            if( !isAvail) {
+            if (!isAvail) {
                 throw new NotFoundError("No billboards found for this store");
             }
             return isAvail;

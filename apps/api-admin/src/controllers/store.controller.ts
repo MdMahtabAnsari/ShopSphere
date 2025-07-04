@@ -42,7 +42,7 @@ class StoreController{
                 data: stores,
             });
         } catch (error) {
-            next(error); // Pass the error to the error handler
+           return next(error); // Pass the error to the error handler
         }
     }
     async getStoreById(req: Request, res: Response, next: NextFunction) {
@@ -61,7 +61,7 @@ class StoreController{
                 data: store,
             });
         } catch (error) {
-            next(error); // Pass the error to the error handler
+           return next(error); // Pass the error to the error handler
         }
     }
     async isUserHaveStore(req: Request, res: Response, next: NextFunction) {
@@ -79,7 +79,7 @@ class StoreController{
                 data: isHave,
             });
         } catch (error) {
-            next(error);
+          return next(error);
         }
     }
     async getUserAllStores(req: Request, res: Response, next: NextFunction) {
@@ -97,7 +97,7 @@ class StoreController{
                 data: stores,
             });
         } catch (error) {
-            next(error); // Pass the error to the error handler
+           return next(error); // Pass the error to the error handler
         }
     }
 
@@ -117,7 +117,7 @@ class StoreController{
                 data: updatedStore,
             });
         } catch (error) {
-            next(error); // Pass the error to the error handler
+           return next(error); // Pass the error to the error handler
         }
     }
 
@@ -137,7 +137,7 @@ class StoreController{
                 data: deletedStore,
             });
         } catch (error) {
-            next(error); // Pass the error to the error handler
+          return next(error); // Pass the error to the error handler
         }
     }
 }

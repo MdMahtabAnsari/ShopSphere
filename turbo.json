@@ -28,8 +28,9 @@
         "CLOUDINARY_CLOUD_NAME",
         "CLOUDINARY_API_KEY",
         "CLOUDINARY_API_SECRET",
-        "NEXT_PUBLIC_CLOUDINARY_API_KEY",
-        "NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME"
+        "MIME_TYPES",
+        "IMAGE_SIZE",
+        "VIDEO_SIZE"
       ]
     },
     "lint": {

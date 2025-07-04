@@ -159,7 +159,7 @@ export function StoreMenu() {
         if( reload) {
             fetchAllStores();
         }
-    }, [reload]);
+    }, [fetchAllStores, reload]);
 
     if (loading) return <StoreMenuSkeleton />;
     if (error) return <ErrorFallback error={error} resetErrorBoundary={() => fetchAllStores()} />;

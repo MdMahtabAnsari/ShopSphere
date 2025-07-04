@@ -10,21 +10,21 @@ import {
     TableRow,
 } from "@workspace/ui/components/table";
 
-import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@workspace/ui/components/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@workspace/ui/components/card";
 
-import {BillboardSchema,BillboardsSchema} from "@workspace/api-response/admin/billboard";
-import {Button} from "@workspace/ui/components/button";
+import { BillboardSchema, BillboardsSchema } from "@workspace/api-response/admin/billboard";
+import { Button } from "@workspace/ui/components/button";
 import Link from "next/link";
-import {Skeleton} from "@workspace/ui/components/skeleton";
-import {PaginationComponent} from "@/components/page/pagination";
+import { Skeleton } from "@workspace/ui/components/skeleton";
+import { PaginationComponent } from "@/components/page/pagination";
 import { ErrorFallback } from "@/components/error/error-fallback";
-import {useState,useEffect,useCallback} from "react";
-import {getBillboards} from "@/lib/api/billboard/billboard";
+import { useState, useEffect, useCallback } from "react";
+import { getBillboards } from "@/lib/api/billboard/billboard";
 
 
 export function ListOfBillboards({
-                                     billboards,
-                                 }: {
+    billboards,
+}: {
     billboards: BillboardSchema[];
 }) {
     return (
@@ -102,45 +102,45 @@ export function ListOfBillboardsSkeleton() {
 }
 
 
-export function ListOfBillboardsWithPagination({storeId}:{ storeId: string }) {
-        const [billboardsData, setBillboardsData] = useState<BillboardsSchema | null>(null);
-        const [loading, setLoading] = useState(true);
-        const [error, setError] = useState<Error | null>(null);
+export function ListOfBillboardsWithPagination({ storeId }: { storeId: string }) {
+    const [billboardsData, setBillboardsData] = useState<BillboardsSchema | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<Error | null>(null);
 
-        const fetchBillboards = useCallback(async (page = 1, limit = 10)=>{
-            setLoading(true);
-            setError(null);
-            try {
-                const response = await getBillboards(storeId, page, limit);
-                if (response.status === "success") {
-                    setBillboardsData(response.data);
-                } else {
-                    throw new Error(response.message || "Failed to fetch billboards");
-                }
-            } catch (error) {
-                setError(error as Error);
-            }finally {
-                setLoading(false);
+    const fetchBillboards = useCallback(async (page = 1, limit = 10) => {
+        setLoading(true);
+        setError(null);
+        try {
+            const response = await getBillboards(storeId, page, limit);
+            if (response.status === "success") {
+                setBillboardsData(response.data);
+            } else {
+                throw new Error(response.message || "Failed to fetch billboards");
             }
+        } catch (error) {
+            setError(error as Error);
+        } finally {
+            setLoading(false);
         }
+    }
         , [storeId]);
 
-        const onPageChange = useCallback((page: number) => {
-           fetchBillboards(page, billboardsData?.pagination?.limit||10);
-        }, [fetchBillboards, billboardsData?.pagination?.limit]);
+    const onPageChange = useCallback((page: number) => {
+        fetchBillboards(page, billboardsData?.pagination?.limit || 10);
+    }, [fetchBillboards, billboardsData?.pagination?.limit]);
 
     useEffect(() => {
         fetchBillboards()
     }, [fetchBillboards]);
 
-    if(loading) return <ListOfBillboardsSkeleton />;
-    if(error) return <ErrorFallback error={error} resetErrorBoundary={()=>fetchBillboards()} />;
-    if(!billboardsData) return null;
+    if (loading) return <ListOfBillboardsSkeleton />;
+    if (error) return <ErrorFallback error={error} resetErrorBoundary={() => fetchBillboards()} />;
+    if (!billboardsData) return null;
 
     return (
         <Card>
             <CardContent>
-                <ListOfBillboards billboards={billboardsData.billboards}/>
+                <ListOfBillboards billboards={billboardsData.billboards} />
             </CardContent>
             <CardFooter>
                 <PaginationComponent

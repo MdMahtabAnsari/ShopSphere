@@ -22,14 +22,18 @@
       "types": "./dist/admin/store/index.d.ts"
     },
     "./admin/billboard": {
-        "import": "./dist/admin/billboard/index.js",
-        "types": "./dist/admin/billboard/index.d.ts"
+      "import": "./dist/admin/billboard/index.js",
+      "types": "./dist/admin/billboard/index.d.ts"
     },
-    "./common/page":{
+    "./admin/billboardMedia": {
+      "import": "./dist/admin/billboardMedia/index.js",
+      "types": "./dist/admin/billboardMedia/index.d.ts"
+    },
+    "./common/page": {
       "import": "./dist/common/page/index.js",
       "types": "./dist/common/page/index.d.ts"
     },
-    "./common":{
+    "./common": {
       "import": "./dist/common/index.js",
       "types": "./dist/common/index.d.ts"
     }

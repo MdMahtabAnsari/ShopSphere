@@ -12,10 +12,6 @@ import {StoreDeleteConformationDialog} from "@/components/dialogs/store-delete-c
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorFallback } from "@/components/error/error-fallback";
 
-interface StoreDataProps {
-    id: string;
-    name: string;
-}
 
 
 export function StoreSetting({storeId}: {storeId: string}) {
@@ -43,7 +39,7 @@ export function StoreSetting({storeId}: {storeId: string}) {
         if (storeId) {
             getStore(storeId);
         }
-    }, [storeId]);
+    }, [getStore, storeId]);
 
 
 

@@ -9,5 +9,4 @@ export const prisma =
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 
 
-export {Prisma} from "../generated/prisma/index.js";
-export type {Store} from "../generated/prisma/index.js";
+export * from "../generated/prisma/index.js";

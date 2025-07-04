@@ -3,7 +3,7 @@
 import { Sheet, SheetTrigger, SheetContent } from "@workspace/ui/components/sheet"
 import { Button } from "@workspace/ui/components/button";
 import Link from "next/link"
-import {useState, useEffect, useCallback} from "react";
+import {useState, useEffect} from "react";
 
 import {
     UserButton,
@@ -72,7 +72,7 @@ export function StoreSettingNavbar() {
                 </ErrorBoundary>
                 <TooltipWrapper text="Store">
                 <Link href={`/dashboard/${storeId}`} className="flex w-full items-center py-2 text-lg font-semibold" prefetch={false}>
-                   <Store/>
+                <Store/>
                 </Link>
                 </TooltipWrapper>
                 <TooltipWrapper text="Billboards">

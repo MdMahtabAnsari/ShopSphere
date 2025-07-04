@@ -2,7 +2,7 @@ import {Request,Response,NextFunction} from "express";
 import {CreateBillboardSchema,StoreIdBillboardIdSchema} from "@workspace/schema/admin/billboard";
 import {billboardService} from "../services/billboard.service.js";
 import {getAuth} from '@clerk/express'
-import {UnauthorisedError} from "@workspace/api-error/error";
+import {UnauthorisedError,BadRequestError} from "@workspace/api-error/error";
 import {GetStoreByStoreIdSchema} from "@workspace/schema/admin/store";
 import {PageLimitSchema} from "@workspace/schema/common/page";
 
@@ -13,8 +13,12 @@ class BillboardController {
             return next(new UnauthorisedError());
         }
         const data: CreateBillboardSchema = req.body;
+        const path = req.file?.path;
+        if(!path) {
+            return next(new BadRequestError("Image/video file is required"));
+        }
         try {
-            const billboard = await billboardService.createBillboard(userId,data);
+            const billboard = await billboardService.createBillboard(userId,path,data);
             res.status(201).json(
             {
                 message: "Billboard created successfully",

@@ -3,7 +3,7 @@ import {ConflictError, InternalServerError,NotFoundError} from "@workspace/api-e
 import {CreateBillboardSchema} from "@workspace/schema/admin/billboard";
 
 class BillboardRepository {
-    async createBillboard(data: CreateBillboardSchema) {
+    async createBillboard(data: Omit<CreateBillboardSchema, 'media'>) {
         try {
             return await prisma.billboard.create({
                 data
@@ -32,6 +32,9 @@ class BillboardRepository {
                 take: limit,
                 orderBy: {
                     createdAt: "desc"
+                },
+                include:{
+                    media: true
                 }
             });
         } catch (error) {
@@ -60,6 +63,9 @@ class BillboardRepository {
                 },
                 orderBy: {
                     createdAt: "desc"
+                },
+                include:{
+                    media:true
                 }
             });
         } catch (error) {
@@ -73,6 +79,9 @@ class BillboardRepository {
             return await prisma.billboard.findUnique({
                 where: {
                     id
+                },
+                include:{
+                    media: true
                 }
             });
         } catch (error) {

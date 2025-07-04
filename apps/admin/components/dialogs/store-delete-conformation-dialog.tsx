@@ -4,7 +4,6 @@ import {useRouter} from "next/navigation";
 import {useCallback, useState} from "react";
 import {ErrorFallback} from "@/components/error/error-fallback";
 import {Button} from "@workspace/ui/components/button";
-import {AlertDialogAction} from "@workspace/ui/components/alert-dialog";
 import {useDeleteStoreDialog} from "@/hooks/store/use-delete-store-dialog";
 import {Loader} from "lucide-react";
 

@@ -13,23 +13,40 @@
   "license": "ISC",
   "type": "module",
   "private": true,
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "exports": {
     "./validator": {
       "import": "./dist/validators/index.js",
       "types": "./dist/validators/index.d.ts"
+    },
+    "./middleware": {
+      "import": "./dist/middlewares/index.js",
+      "types": "./dist/middlewares/index.d.ts"
+    },
+    "./service": {
+      "import": "./dist/services/index.js",
+      "types": "./dist/services/index.d.ts"
+    },
+    "./util":{
+      "import":"./dist/utils/index.js",
+      "types":"./dist/utils/index.d.ts"
     }
   },
   "dependencies": {
     "@workspace/api-error": "workspace:^",
+    "cloudinary": "^2.7.0",
+    "multer": "^2.0.1",
     "zod": "^3.25.67",
     "zod-validation-error": "^3.5.2"
   },
   "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/multer": "^2.0.0",
+    "@types/node": "^24.0.3",
     "@workspace/eslint-config": "workspace:^",
     "@workspace/typescript-config": "workspace:*",
-    "typescript": "^5.7.3",
-    "@types/node": "^24.0.3",
-    "@types/express": "^5.0.3"
+    "typescript": "^5.7.3"
   }
 }
