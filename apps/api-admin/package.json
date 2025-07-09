@@ -17,7 +17,7 @@
   "type": "module",
   "private": true,
   "dependencies": {
-    "@clerk/express": "^1.7.0",
+    "@clerk/express": "^1.7.4",
     "@workspace/api-error": "workspace:^",
     "@workspace/backend-common": "workspace:^",
     "@workspace/db": "workspace:^",
