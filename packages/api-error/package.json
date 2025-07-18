@@ -35,6 +35,6 @@
     "typescript": "^5.7.3"
   },
   "dependencies": {
-    "multer": "^2.0.1"
+    "multer": "^2.0.2"
   }
 }

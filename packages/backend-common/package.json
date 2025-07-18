@@ -37,7 +37,7 @@
   "dependencies": {
     "@workspace/api-error": "workspace:^",
     "cloudinary": "^2.7.0",
-    "multer": "^2.0.1",
+    "multer": "^2.0.2",
     "zod": "^3.25.67",
     "zod-validation-error": "^3.5.2"
   },
